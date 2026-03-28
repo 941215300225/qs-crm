@@ -1,50 +1,47 @@
-# QS CRM — REST API сервис заявок
+# qs-crm
 
-REST API для управления заявками на NestJS + PostgreSQL.
+Небольшой REST API сервис для управления заявками. Писал на NestJS + PostgreSQL.
 
 ## Стек
 
-- Node.js + TypeScript (strict)
-- NestJS
+- NestJS + TypeScript
 - PostgreSQL + TypeORM
-- Swagger / OpenAPI
-- class-validator
+- Swagger для документации
+- Docker для базы данных
 
-## Запуск
+## Как запустить локально
 
-### 1. Клонировать репозиторий
+Клонируй репозиторий:
 
 ```bash
 git clone <repo-url>
 cd qs-crm
 ```
 
-### 2. Настроить переменные окружения
+Скопируй env файл и заполни под себя:
 
 ```bash
 cp .env.example .env
 ```
 
-### 3. Запустить базу данных
+Подними базу данных:
 
 ```bash
 docker-compose up -d
 ```
 
-### 4. Установить зависимости и запустить сервер
+Установи зависимости и запусти:
 
 ```bash
 npm install
 npm run start:dev
 ```
 
-Сервер запустится на http://localhost:3000
+Сервер будет на http://localhost:3000
 
-Swagger UI доступен по адресу: http://localhost:3000/api
+Swagger: http://localhost:3000/api
 
----
-
-## Пример .env
+## Переменные окружения
 
 ```env
 DB_HOST=localhost
@@ -52,40 +49,32 @@ DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=postgres
 DB_NAME=qs_crm
-
 PORT=3000
 ```
 
----
+## API
 
-## API endpoints
-
-| Метод | URL | Описание |
-|-------|-----|----------|
+| Метод | URL | Что делает |
+|-------|-----|-----------|
 | POST | /applications | Создать заявку |
 | GET | /applications | Список заявок |
-| GET | /applications/:id | Получить заявку |
+| GET | /applications/:id | Одна заявка |
 | PATCH | /applications/:id | Обновить заявку |
-| PATCH | /applications/:id/status | Изменить статус |
+| PATCH | /applications/:id/status | Поменять статус |
 
-### Параметры списка (GET /applications)
+Список поддерживает пагинацию, фильтр по статусу, текстовый поиск и сортировку.
 
-| Параметр | Тип | Описание |
-|----------|-----|----------|
-| page | number | Страница (по умолчанию 1) |
-| limit | number | Размер страницы (по умолчанию 10) |
-| status | string | Фильтр по статусу: new, in_progress, won, lost |
-| search | string | Поиск по имени и описанию |
-| sortBy | string | Поле сортировки: createdAt, name, status |
-| order | string | ASC или DESC |
+## Статусы заявки
 
-### Статусы заявки
+Заявка всегда создаётся со статусом `new`. Дальше можно менять:
 
 ```
 new → in_progress → won
                   → lost
 ```
 
-- `won` и `lost` — финальные статусы, изменить нельзя
-- Нельзя установить тот же статус что уже стоит
-- При некорректном переходе возвращается `400 Bad Request`
+`won` и `lost` — финальные, после них статус поменять нельзя. Если попытаться — вернётся 400.
+
+## Про структуру
+
+Старался держать всё просто: контроллер принимает запросы, сервис содержит логику, entity описывает таблицу. Без лишних абстракций.
