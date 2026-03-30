@@ -13,14 +13,14 @@ export class CreateApplicationDto {
   @IsString()
   description?: string;
 
-  @ApiProperty({ example: '+77001234567' })
+  @ApiProperty({ example: '+77474476738' })
   @IsString()
   @IsNotEmpty()
   phone: string;
 }
 
 export class UpdateApplicationDto {
-  @ApiPropertyOptional({ example: 'Иван Петров' })
+  @ApiPropertyOptional({ example: 'Аскарбеков Бексултан' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
