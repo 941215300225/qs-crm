@@ -55,7 +55,7 @@ PORT=3000
 ## API
 
 | Метод | URL | Что делает |
-
+|-------|-----|----------|
 | POST | /applications | Создать заявку |
 | GET | /applications | Список заявок |
 | GET | /applications/:id | Одна заявка |
