@@ -3,7 +3,7 @@ import { IsString, IsNotEmpty, IsMobilePhone, IsOptional, IsEnum } from 'class-v
 import { ApplicationStatus } from '../entities/application.entity';
 
 export class CreateApplicationDto {
-  @ApiProperty({ example: 'Иван Иванов' })
+  @ApiProperty({ example: 'Аскарбеков Бексултан' })
   @IsString()
   @IsNotEmpty()
   name: string;
